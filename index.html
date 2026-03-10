@@ -629,7 +629,7 @@ footer .footer-links a:hover { color: var(--accent); }
       </div>
       <div class="feature">
         <dt class="feature-name">TypeScript Strict Mode</dt>
-        <dd class="feature-desc">Achieved 91.7% type coverage across the codebase, reducing runtime errors and improving dev experience for open source contributors.</dd>
+        <dd class="feature-desc">Achieved 96.32% TypeScript type coverage across the codebase, reducing runtime errors and improving dev experience for open source contributors.</dd>
       </div>
       <div class="feature">
         <dt class="feature-name">Testing Infrastructure</dt>
@@ -752,11 +752,11 @@ footer .footer-links a:hover { color: var(--accent); }
 </section>
 
 <!-- ═══════════════════════════════════════════
-     TALKS & WRITING
+     TECHNICAL TALKS & WRITING
 ════════════════════════════════════════════ -->
 <section class="section" aria-labelledby="heading-talks">
   <div class="section-aside">
-    <h2 class="label" id="heading-talks">Talks &amp;<br>Writing</h2>
+    <h2 class="label" id="heading-talks">Technical Talks &amp;<br>Writing</h2>
   </div>
   <div>
 
@@ -774,7 +774,7 @@ footer .footer-links a:hover { color: var(--accent); }
       <img src="assets/images/redis-tech-talk-title-slide.png" alt="Cache Me If You Can — title slide">
     </div>
     <p class="project-desc">
-      A 12-minute public talk exploring Redis architecture through the lens of cognitive
+      A 12-minute tech talk sponsored by Pressable exploring Redis architecture through the lens of cognitive
       systems design — how human memory constraints map directly onto how Redis manages
       latency, TTL, eviction, and persistence. Delivered to engineers at mixed seniority levels.
     </p>
@@ -837,7 +837,7 @@ design for differences – in <strong>systems</strong> and <strong>people</stron
   <div>
     <h3 class="project-name">ChorePal</h3><!-- semantic: h3 added for landmark -->
     <p class="project-desc">
-      Family chore tracking app built with TypeScript, React, Tailwind CSS, and MongoDB, upgraded to PostgreSQL + Supabase for relational data modeling and user authentication.
+      Family chore tracking app built with TypeScript, React, Tailwind CSS, and MongoDB. Features JWT authentication, AWS S3 chore icon integration, Redux Toolkit state management, and a gamified progress tracker with accessible confetti animations.
     </p>
     <p class="demo-note">Demo of chore assignment and family dashboard</p>
     <div class="gif-container">
@@ -848,16 +848,16 @@ design for differences – in <strong>systems</strong> and <strong>people</stron
     <h4 class="features-label">Key Features</h4><!-- semantic: h4 added for landmark -->
     <dl class="feature-list"><!-- semantic: dl wraps term/description pairs -->
       <div class="feature">
-        <dt class="feature-name">PostgreSQL + Supabase</dt>
-        <dd class="feature-desc">Relational data modeling and user auth enabling efficient task tracking and user management — a deliberate architectural upgrade from MongoDB.</dd>
+        <dt class="feature-name">AWS S3 + Smart Image Mapping</dt>
+        <dd class="feature-desc">Dynamic chore icon retrieval from S3 with client-side keyword matching — chore names like "dishes" or "vacuum" resolve to contextual icons automatically, with a graceful fallback.</dd>
       </div>
       <div class="feature">
-        <dt class="feature-name">JWT Authentication</dt>
-        <dd class="feature-desc">Secured API access with protected backend routes and httpOnly cookie-based JWT, resulting in stateless, secure sessions.</dd>
+        <dt class="feature-name">JWT Authentication + Bcrypt</dt>
+        <dd class="feature-desc">Stateless auth via JWT with 1-hour token expiration and bcrypt password hashing — environment-variable-managed secrets throughout.</dd>
       </div>
       <div class="feature">
-        <dt class="feature-name">Tailwind CSS</dt>
-        <dd class="feature-desc">Accelerated development 40% leveraging utility-first classes for consistent, responsive component styling across screen sizes.</dd>
+        <dt class="feature-name">Tailwind CSS v4</dt>
+        <dd class="feature-desc">Utility-first styling drives a responsive mobile-first weekly grid (1→4 columns), WCAG-verified color-coded progress indicators, and dark mode — all co-located with component logic, no custom CSS file needed.</dd>
       </div>
     </dl>
   </div>

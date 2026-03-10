@@ -1,38 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jamila Gibson — Software Engineer</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Anti-flash: apply stored/system theme before first paint -->
+<script>
+  (function(){
+    var t = localStorage.getItem('portfolio-theme');
+    if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+  }());
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ─── DARK MODE (DEFAULT) ─────────────────── */
 :root {
-  --black:    #0D0D0D;
-  --surface:  #141414;
-  --lift:     #1A1A1A;
-  --rule:     #252525;
-  --white:    #F2F0EB;
-  --dim:      rgba(242,240,235,0.55);
-  --mid:      #777777;
-  --accent:   #E0321C;
-  --display:  'Playfair Display', Georgia, serif;
-  --body:     'DM Sans', system-ui, sans-serif;
-  --mono:     'DM Mono', monospace;
+  color-scheme: dark;
+  --bg:            #1A1A1A;
+  --surface:       #242424;
+  --lift:          #2D2D2D;
+  --rule:          #383838;
+  --text:          #F0EDE8;
+  --dim:           rgba(240,237,232,0.62);
+  --mid:           #909090;
+  --accent:        #A07AD6;
+  --accent-subtle: rgba(160,122,214,0.08);
+  --accent-muted:  rgba(160,122,214,0.75);
+  --display:       'Playfair Display', Georgia, serif;
+  --body:          'Poppins', system-ui, sans-serif;
+  --mono:          'DM Mono', monospace;
+}
+
+/* ─── LIGHT MODE ──────────────────────────── */
+[data-theme="light"] {
+  color-scheme: light;
+  --bg:            #F5F3EF;
+  --surface:       #EAE8E4;
+  --lift:          #FFFFFF;
+  --rule:          #D0CCC7;
+  --text:          #1A1A1A;
+  --dim:           rgba(26,26,26,0.62);
+  --mid:           #666666;
+  --accent:        #6B3FA0;
+  --accent-subtle: rgba(107,63,160,0.08);
+  --accent-muted:  rgba(107,63,160,0.75);
+}
+
+/* Respect system light preference when no manual override */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --bg:            #F5F3EF;
+    --surface:       #EAE8E4;
+    --lift:          #FFFFFF;
+    --rule:          #D0CCC7;
+    --text:          #1A1A1A;
+    --dim:           rgba(26,26,26,0.62);
+    --mid:           #666666;
+    --accent:        #6B3FA0;
+    --accent-subtle: rgba(107,63,160,0.08);
+    --accent-muted:  rgba(107,63,160,0.75);
+  }
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--black);
-  color: var(--white);
+  background: var(--bg);
+  color: var(--text);
   font-family: var(--body);
   font-weight: 300;
   font-size: 15px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
+
+/* ─── THEME TOGGLE ────────────────────────── */
+#theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  color: var(--mid);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+#theme-toggle:hover { color: var(--text); border-color: var(--mid); }
+#theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* ─── LAYOUT ─────────────────────────────── */
 .page-wrap {
@@ -45,7 +113,7 @@ body {
 .label {
   font-family: var(--body);
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--mid);
@@ -66,6 +134,7 @@ body {
   line-height: 0.95;
   letter-spacing: -0.025em;
   margin-bottom: 28px;
+  color: var(--text);
 }
 
 .hero-name .accent {
@@ -83,25 +152,23 @@ body {
   margin-bottom: 28px;
 }
 
-.hero-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0;
-}
+.hero-links { display: flex; flex-wrap: wrap; gap: 0; }
 
 .hero-links a {
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.06em;
   color: var(--mid);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
   transition: color 0.2s;
 }
-.hero-links a:hover { color: var(--white); }
+.hero-links a:hover { color: var(--accent); }
 .hero-links a + a::before {
   content: ' · ';
   color: var(--rule);
   margin: 0 10px;
+  text-decoration: none;
 }
 
 /* ─── ABOUT ME ────────────────────────────── */
@@ -114,6 +181,35 @@ body {
   align-items: start;
 }
 
+.about-photo {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(100%); transition: filter 0.4s ease; }
+.about-photo img:hover { filter: grayscale(0%); }
+.about-photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--mid);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-align: center;
+  padding: 16px;
+}
+.about-label { margin-top: 12px; display: block; }
+
 .about-body p {
   font-size: 15px;
   font-weight: 300;
@@ -123,16 +219,8 @@ body {
 }
 .about-body p:last-child { margin-bottom: 0; }
 
-.about-hobbies {
-  margin-top: 24px;
-  font-size: 13px;
-  color: var(--mid);
-  font-weight: 300;
-}
-.about-hobbies strong {
-  color: var(--white);
-  font-weight: 500;
-}
+.about-hobbies { margin-top: 24px; font-size: 13px; color: var(--mid); font-weight: 300; }
+.about-hobbies strong { color: var(--text); font-weight: 600; }
 
 /* ─── SECTION SHELL ───────────────────────── */
 .section {
@@ -143,9 +231,42 @@ body {
   gap: 48px;
   align-items: start;
 }
+.section-aside { padding-top: 4px; }
 
-.section-aside {
-  padding-top: 4px;
+/* ─── GIF / DEMO CONTAINER ────────────────── */
+.gif-container {
+  margin: 10px 0 32px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+}
+.gif-container img,
+.gif-container video { width: 100%; display: block; border-radius: 3px; }
+.gif-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 24px;
+  color: var(--mid);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-align: center;
+  min-height: 200px;
+}
+.gif-placeholder-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--accent);
 }
 
 /* ─── PROJECT CONTENT ─────────────────────── */
@@ -156,64 +277,40 @@ body {
   line-height: 1.1;
   letter-spacing: -0.01em;
   margin-bottom: 12px;
+  color: var(--text);
 }
-
 .project-desc {
   font-size: 14px;
   font-weight: 300;
   color: var(--dim);
   max-width: 560px;
   line-height: 1.8;
-  margin-bottom: 36px;
+  margin-bottom: 16px;
 }
-
 .demo-note {
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.06em;
   color: var(--mid);
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.demo-note::before {
-  content: '';
-  width: 24px;
-  height: 1px;
-  background: var(--rule);
-  display: inline-block;
-}
+.demo-note::before { content: ''; width: 24px; height: 1px; background: var(--rule); display: inline-block; }
 
 .features-label {
   font-family: var(--body);
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--mid);
   margin-bottom: 24px;
 }
-
-.feature {
-  margin-bottom: 24px;
-}
-
-.feature-name {
-  display: block;
-  font-weight: 500;
-  font-size: 14px;
-  color: var(--white);
-  margin-bottom: 4px;
-}
-
-.feature-desc {
-  font-size: 13.5px;
-  font-weight: 300;
-  color: var(--dim);
-  line-height: 1.7;
-  max-width: 520px;
-}
+.feature { margin-bottom: 24px; }
+.feature-name { display: block; font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 4px; }
+.feature-desc { font-size: 13.5px; font-weight: 300; color: var(--dim); line-height: 1.7; max-width: 520px; }
 
 /* ─── STATUS BADGE (CERES) ────────────────── */
 .status-badge {
@@ -226,7 +323,6 @@ body {
   color: var(--mid);
   margin-bottom: 36px;
 }
-
 .live-dot {
   width: 7px; height: 7px;
   border-radius: 50%;
@@ -234,141 +330,43 @@ body {
   animation: breathe 2.4s ease-in-out infinite;
   flex-shrink: 0;
 }
-@keyframes breathe {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.3; }
-}
+@keyframes breathe { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
 /* ─── FRAMEWORK TABLE (CERES) ─────────────── */
-.framework-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 32px 0;
-  font-size: 13px;
-}
-
+.framework-table { width: 100%; border-collapse: collapse; margin: 32px 0; font-size: 13px; }
 .framework-table th {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--mid);
-  padding: 10px 16px;
-  text-align: left;
-  border-bottom: 1px solid var(--rule);
-  font-weight: 400;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--mid); padding: 10px 16px;
+  text-align: left; border-bottom: 1px solid var(--rule); font-weight: 400;
 }
-
 .framework-table td {
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--rule);
-  vertical-align: top;
-  color: var(--dim);
-  line-height: 1.55;
-  font-weight: 300;
+  padding: 14px 16px; border-bottom: 1px solid var(--rule);
+  vertical-align: top; color: var(--dim); line-height: 1.55; font-weight: 300;
 }
-
 .framework-table tr:last-child td { border-bottom: none; }
-
-.framework-table tr.active-row td {
-  color: var(--white);
-  background: rgba(255,255,255,0.02);
-  border-left: 2px solid var(--accent);
-}
-
-.framework-table tr.dim-row td { color: rgba(242,240,235,0.3); }
-
-.stage-tag {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--accent);
-  letter-spacing: 0.08em;
-  display: block;
-  margin-bottom: 2px;
-}
-
-.phase-tag {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--accent);
-  background: rgba(224,50,28,0.1);
-  padding: 2px 8px;
-  border-radius: 2px;
-  display: inline-block;
-}
+.framework-table tr.active-row td { color: var(--text); background: var(--accent-subtle); border-left: 2px solid var(--accent); }
+.framework-table tr.dim-row td { opacity: 0.35; }
+.stage-tag { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 0.08em; display: block; margin-bottom: 2px; }
+.phase-tag { font-family: var(--mono); font-size: 10px; color: var(--accent); background: var(--accent-subtle); padding: 2px 8px; border-radius: 2px; display: inline-block; }
 
 /* ─── RISK GRID (CERES) ───────────────────── */
-.risk-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
-  margin: 28px 0;
-}
-
-.risk-card {
-  background: var(--surface);
-  padding: 20px;
-}
-
-.risk-type {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 8px;
-}
-
-.risk-card p {
-  font-size: 12.5px;
-  font-weight: 300;
-  color: var(--dim);
-  line-height: 1.6;
-}
+.risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 28px 0; }
+.risk-card { background: var(--lift); padding: 20px; }
+.risk-type { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.risk-card p { font-size: 12.5px; font-weight: 300; color: var(--dim); line-height: 1.6; }
 
 /* ─── CALLOUT ─────────────────────────────── */
-.callout {
-  border-left: 2px solid var(--rule);
-  padding: 16px 20px;
-  margin: 28px 0;
-}
-.callout p {
-  font-size: 13px;
-  font-style: italic;
-  color: var(--mid);
-  line-height: 1.7;
-}
+.callout { border-left: 2px solid var(--rule); padding: 16px 20px; margin: 28px 0; }
+.callout p { font-size: 13px; font-style: italic; color: var(--mid); line-height: 1.7; }
 .callout.warn { border-color: var(--accent); }
-.callout.warn p { color: rgba(224,50,28,0.7); }
-
-/* ─── ARCHIVES SECTION ────────────────────── */
-.archives-header {
-  padding: 72px 0 0;
-  border-bottom: none;
-  grid-template-columns: 180px 1fr;
-}
+.callout.warn p { color: var(--accent-muted); }
 
 /* ─── DESIGN SECTION ──────────────────────── */
-.design-note {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  color: var(--mid);
-  margin-top: 20px;
-  line-height: 1.7;
-}
-
+.design-note { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--mid); margin-top: 20px; line-height: 1.7; }
 .figma-link {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--accent);
-  letter-spacing: 0.06em;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(224,50,28,0.3);
-  padding-bottom: 1px;
-  transition: border-color 0.2s;
+  font-family: var(--mono); font-size: 11px; color: var(--accent);
+  letter-spacing: 0.06em; text-decoration: none;
+  border-bottom: 1px solid var(--accent-muted); padding-bottom: 1px; transition: border-color 0.2s;
 }
 .figma-link:hover { border-color: var(--accent); }
 
@@ -377,58 +375,21 @@ body {
   padding: 80px 0;
   border-bottom: 1px solid var(--rule);
   border-top: 1px solid var(--rule);
+  background: var(--surface);
 }
-
 .quote-text {
-  font-family: var(--display);
-  font-style: italic;
-  font-size: clamp(18px, 2.5vw, 26px);
-  font-weight: 700;
-  line-height: 1.45;
-  color: var(--white);
-  max-width: 680px;
-  margin-bottom: 20px;
+  font-family: var(--display); font-style: italic;
+  font-size: clamp(18px, 2.5vw, 26px); font-weight: 700;
+  line-height: 1.45; color: var(--text); max-width: 680px; margin-bottom: 20px;
 }
-
-.quote-attr {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  color: var(--mid);
-}
+.quote-attr { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--mid); }
 
 /* ─── EXPERTISE ───────────────────────────── */
-#expertise {
-  padding: 72px 0 96px;
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 48px;
-}
-
-.expertise-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px 56px;
-}
-
-.exp-block-title {
-  font-weight: 500;
-  font-size: 14px;
-  color: var(--white);
-  margin-bottom: 10px;
-}
-
-.exp-block ul {
-  list-style: none;
-  padding: 0;
-}
-
-.exp-block ul li {
-  font-size: 13px;
-  font-weight: 300;
-  color: var(--dim);
-  line-height: 1.8;
-}
+#expertise { padding: 72px 0 96px; display: grid; grid-template-columns: 180px 1fr; gap: 48px; }
+.expertise-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 56px; }
+.exp-block-title { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 10px; }
+.exp-block ul { list-style: none; padding: 0; }
+.exp-block ul li { font-size: 13px; font-weight: 300; color: var(--dim); line-height: 1.8; }
 
 /* ─── FOOTER ──────────────────────────────── */
 footer {
@@ -439,68 +400,173 @@ footer {
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
+  background: var(--surface);
 }
-
-footer .footer-name {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--mid);
-}
-
-footer .footer-links {
-  display: flex;
-  gap: 20px;
-}
-
-footer .footer-links a {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  color: var(--mid);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-footer .footer-links a:hover { color: var(--white); }
+footer .footer-name { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--mid); }
+footer .footer-links { display: flex; gap: 20px; }
+footer .footer-links a { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+footer .footer-links a:hover { color: var(--accent); }
 
 /* ─── ANIMATIONS ──────────────────────────── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .fade { opacity: 0; animation: fadeUp 0.6s ease forwards; }
 .d1 { animation-delay: 0.05s; }
 .d2 { animation-delay: 0.15s; }
 .d3 { animation-delay: 0.25s; }
 .d4 { animation-delay: 0.35s; }
 
+/* ─── TALKS & WRITING ──────────────────── */
+
+/* Skip link — visually hidden until focused */
+.tw-skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 200;
+  background: var(--accent);
+  color: var(--bg);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 8px 16px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: top 0.15s;
+}
+.tw-skip-link:focus {
+  top: 16px;
+}
+
+/* Static checkmark for completed/published status badges */
+.tw-status-check {
+  font-size: 11px;
+  color: var(--accent);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* Definition list reset — preserves .feature spacing */
+.feature-list {
+  margin: 0;
+  padding: 0;
+}
+
+/* figma-link focus state */
+.figma-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* figma-link touch target padding */
+.figma-link {
+  display: inline-block;
+  padding: 8px 0;
+}
+
+/* Side-by-side slide grid for talks */
+.slide-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0 28px;
+}
+.slide-grid img {
+  width: 100%;
+  display: block;
+  border-radius: 3px;
+  border: 1px solid var(--rule);
+}
+
+/* Reduced motion — disable fade entrance animation */
+@media (prefers-reduced-motion: reduce) {
+  .fade {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* ─── FIGMA COMPONENT IMAGES ─────────────── */
+.figma-compare-grid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 16px;
+  margin: 16px 0 32px;
+  align-items: start;
+}
+.figma-compare-grid figure { margin: 0; }
+.figma-compare-grid img {
+  width: 100%;
+  display: block;
+  border-radius: 3px;
+  border: 1px solid var(--rule);
+}
+.figma-compare-grid figcaption {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--mid);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+/* ─── SPHINX / QUOTE IMAGE ───────────────── */
+.quote-img-wrap {
+  width: 100%;
+  height: 340px;
+  overflow: hidden;
+}
+.quote-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 45%;
+  display: block;
+  filter: grayscale(100%);
+  transition: filter 0.4s ease;
+}
+.quote-img-wrap img:hover { filter: grayscale(0%); }
+
 /* ─── RESPONSIVE ──────────────────────────── */
 @media (max-width: 680px) {
   .page-wrap { padding: 0 28px; }
   footer { padding: 28px; }
+  #theme-toggle { top: 14px; right: 16px; }
   .section, #about, #expertise { grid-template-columns: 1fr; gap: 20px; }
   .section-aside { display: none; }
   .risk-grid { grid-template-columns: 1fr; }
   .expertise-grid { grid-template-columns: 1fr; }
   .framework-table { font-size: 12px; }
-  .framework-table th, .framework-table td { padding: 10px 10px; }
+  .framework-table th, .framework-table td { padding: 10px; }
+  .about-photo { max-width: 140px; }
 }
 </style>
 </head>
 <body>
+
+<!-- semantic: skip link — first child of body per WCAG SC 2.4.1 -->
+<a href="#main-content" class="tw-skip-link">Skip to main content</a>
+
+<!-- ─── THEME TOGGLE ──────────────────────── -->
+<button id="theme-toggle" aria-label="Switch to light mode">
+  <span id="toggle-icon">&#9728;</span>
+  <span id="toggle-label">Light</span>
+</button>
+
+<!-- semantic: main landmark wraps all primary page content -->
+<main id="main-content">
 
 <!-- ═══════════════════════════════════════════
      HERO
 ════════════════════════════════════════════ -->
 <div class="page-wrap">
 <section id="hero">
-  <div class="hero-name fade d1">
+  <h1 class="hero-name fade d1"><!-- semantic: h1 added for landmark -->
     Jamila Gibson,<br>
     <span class="accent">Software<br>Engineer</span>
-  </div>
+  </h1>
   <p class="hero-tagline fade d2">
-    I build delightful, accessible EdTech and Dev tools that, as a user, I wish existed.
+    I build delightfully accessible EdTech and Dev tools that — as a user — I've spent years wishing existed.
   </p>
   <div class="hero-links fade d3">
     <a href="https://github.com/jamilagibson">github.com/jamilagibson</a>
@@ -512,19 +578,23 @@ footer .footer-links a:hover { color: var(--white); }
 <!-- ═══════════════════════════════════════════
      ABOUT ME
 ════════════════════════════════════════════ -->
-<section id="about" class="fade d4">
+<section id="about" class="fade d4" aria-labelledby="heading-about"><!-- semantic: aria-labelledby added for landmark -->
   <div class="section-aside">
-    <span class="label">About<br>Me</span>
+    <!-- To add your portrait: replace .about-photo-placeholder with <img src="assets/photo.jpg" alt="Jamila Gibson"> inside .about-photo -->
+    <div class="about-photo">
+      <img src="assets/images/headshot-portfolio.jpg" alt="Jamila Gibson, Software Engineer">
+    </div>
+    <h2 class="label about-label" id="heading-about">About<br>Me</h2><!-- semantic: h2 added for landmark -->
   </div>
   <div class="about-body">
     <p>
-      I dove into software engineering the same way I approach everything — by going all in. Eighteen years designing and documenting learning experiences for students with a wide range of accessibility needs gives me something highly valuable: I know exactly who I'm building for, because I've been in the room with them.
+      I dove into software engineering the same way I approach everything — by going all in. Eighteen years designing and documenting learning experiences for students with a wide range of accessibility needs gives me something highly valuable: I know exactly who I'm building for because I've been in the room with them.
     </p>
     <p>
       My approach bridges three disciplines that don't often live in the same engineer: deep user empathy, rigorous standards-based thinking, and full stack engineering. I believe the most effective EdTech tools aren't just technically sound or beautifully architected — they're both. Building that combination gives me daily inspiration.
     </p>
     <p class="about-hobbies">
-      <strong>Hobbies + Interests:</strong> Women@MH Pod Leader, Toastmasters Competitor, Music + Podcast Lover, Exercise Enthusiast, Outdoor Explorer
+      <strong>Hobbies + Interests:</strong> Women@MH Pod Leader, Toastmasters Competitor (and Contest Winner!), Music + Podcast Lover, Exercise Enthusiast, Outdoor Explorer
     </p>
   </div>
 </section>
@@ -532,224 +602,310 @@ footer .footer-links a:hover { color: var(--white); }
 <!-- ═══════════════════════════════════════════
      CURRENT WORK — REACTIME NATIVE
 ════════════════════════════════════════════ -->
-<section class="section">
+<section class="section" aria-labelledby="heading-reactime"><!-- semantic: aria-labelledby added for landmark -->
   <div class="section-aside">
-    <span class="label">Current<br>Work</span>
+    <h2 class="label" id="heading-reactime">Current<br>Work</h2><!-- semantic: h2 added for landmark -->
   </div>
   <div>
-    <div class="project-name">Reactime Native</div>
+    <h3 class="project-name">Reactime Native</h3><!-- semantic: h3 added for landmark -->
     <p class="project-desc">
       Reactime Native extends the popular Reactime time-travel debugger to React Native mobile developers — a gap that previously had no tooling solution. Built at Codesmith's advanced engineering immersive as an open source OSLabs project.
     </p>
     <p class="demo-note">Demo of fully accessible keyboard nav</p>
-
-    <p class="features-label">Key Features</p>
-
-    <div class="feature">
-      <span class="feature-name">WebSocket Architecture</span>
-      <span class="feature-desc">Three-layer relay system connecting React Native mobile app, a Node.js server, and a browser-based debugger UI.</span>
+    <div class="gif-container">
+      <video autoplay loop muted playsinline>
+        <source src="assets/videos/reactime-native-demo.mp4" type="video/mp4">
+      </video>
     </div>
-    <div class="feature">
-      <span class="feature-name">Redux Toolkit</span>
-      <span class="feature-desc">Architected state management layer using createSlice for real-time snapshot capture and time-travel debugging.</span>
-    </div>
-    <div class="feature">
-      <span class="feature-name">TypeScript Strict Mode</span>
-      <span class="feature-desc">Achieved 91.7% type coverage across the codebase, reducing runtime errors and improving dev experience for open source contributors.</span>
-    </div>
-    <div class="feature">
-      <span class="feature-name">Testing Infrastructure</span>
-      <span class="feature-desc">Built comprehensive unit and integration test suites with Vitest for reliability across the full relay architecture.</span>
-    </div>
+    <h4 class="features-label">Key Features</h4><!-- semantic: h4 added for landmark -->
+    <dl class="feature-list"><!-- semantic: dl wraps term/description pairs -->
+      <div class="feature">
+        <dt class="feature-name">WebSocket Architecture</dt>
+        <dd class="feature-desc">Three-layer relay system connecting React Native mobile app, a Node.js server, and a browser-based debugger UI.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">Redux Toolkit</dt>
+        <dd class="feature-desc">Architected state management layer using createSlice for real-time snapshot capture and time-travel debugging.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">TypeScript Strict Mode</dt>
+        <dd class="feature-desc">Achieved 91.7% type coverage across the codebase, reducing runtime errors and improving dev experience for open source contributors.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">Testing Infrastructure</dt>
+        <dd class="feature-desc">Built comprehensive unit and integration test suites with Vitest for reliability across the full relay architecture.</dd>
+      </div>
+    </dl>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     CURRENT WORK — HISPANOSPHERE
+     CURRENT WORK — SIGNAL BOARD
 ════════════════════════════════════════════ -->
-<section class="section">
+<section class="section" aria-labelledby="heading-signalboard"><!-- semantic: aria-labelledby added for landmark -->
   <div class="section-aside">
-    <span class="label">Current<br>Work</span>
+    <h2 class="label" id="heading-signalboard">Current<br>Work</h2><!-- semantic: h2 added for landmark -->
   </div>
   <div>
-    <div class="project-name">Hispanosphere</div>
+    <h3 class="project-name">Signal Board</h3><!-- semantic: h3 added for landmark -->
     <p class="project-desc">
-      Hispanosphere is a full-stack solo project for exploring the culture, history, music, food, and slang of 26 Spanish-speaking countries. Designed, architected, and shipped independently from database schema to deployed UI.
+      Signal Board is a Node.js/Express + PostgreSQL feature voting API — a deliberately engineered backend built as a performance engineering lab. Users submit feature requests and vote on priorities; the architecture demonstrates the full arc from N+1 anti-pattern diagnosis to a quantified 22x speedup, documented via ADRs at every step.
     </p>
-    <p class="demo-note">Demo of fully accessible mouse and keyboard nav</p>
-
-    <p class="features-label">Key Features</p>
-
-    <div class="feature">
-      <span class="feature-name">Interactive Leaflet Map</span>
-      <span class="feature-desc">Custom marker and popup system built with react-leaflet v5, rendering all countries with cultural deep-dives accessible via map.</span>
+    <p class="demo-note">Instrumented query logs · EXPLAIN ANALYZE output · ADR documentation</p>
+    <div class="gif-container">
+      <video autoplay loop muted playsinline>
+        <source src="assets/videos/signal-board-demo.mp4" type="video/mp4">
+      </video>
     </div>
-    <div class="feature">
-      <span class="feature-name">REST API + MongoDB Atlas</span>
-      <span class="feature-desc">Express 5 with Mongoose schema design powering a structured subtopic model: fun facts, music, food, slang, history, and pop culture.</span>
-    </div>
-    <div class="feature">
-      <span class="feature-name">WCAG 2.1 AA Accessibility</span>
-      <span class="feature-desc">Resolved a non-trivial Leaflet keyboard focus interception bug using double requestAnimationFrame sequencing, and implemented manual focus return on popup close — both absent from Leaflet's default behavior.</span>
-    </div>
-    <div class="feature">
-      <span class="feature-name">Modern Full-Stack Architecture</span>
-      <span class="feature-desc">React 19 + Vite 6 + Tailwind v4 frontend against an Express 5 + MongoDB Atlas backend, with an ADR-format engineering log.</span>
-    </div>
+    <h4 class="features-label">Key Features</h4><!-- semantic: h4 added for landmark -->
+    <dl class="feature-list"><!-- semantic: dl wraps term/description pairs -->
+      <div class="feature">
+        <dt class="feature-name">Layered Architecture</dt>
+        <dd class="feature-desc">Strict four-layer separation — routes → controllers → services → db — with Zod validation at the HTTP boundary. Each layer has one responsibility; services are testable without a database or HTTP server.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">N+1 Diagnosis → 22x Speedup</dt>
+        <dd class="feature-desc">Diagnosed an intentional N+1 anti-pattern (501 queries, ~5856ms) using EXPLAIN ANALYZE and structured logs. Replaced with a single LEFT JOIN — 1 query, ~263ms. LEFT JOIN over INNER JOIN was a deliberate correctness call: INNER JOIN silently drops zero-vote requests.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">Centralized Error Handling</dt>
+        <dd class="feature-desc">Custom <code>AppError</code> class + global middleware ensure consistent <code>{ error, code, details }</code> response shapes. Intentional errors surface to clients; unexpected errors log server-side behind the correlation ID, preventing information leakage.</dd>
+      </div>
+    </dl>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
      CURRENT WORK — LANGUAGE HACKALATOR
 ════════════════════════════════════════════ -->
-<section class="section">
+<section class="section" aria-labelledby="heading-hackalator"><!-- semantic: aria-labelledby added for landmark -->
   <div class="section-aside">
-    <span class="label">Current<br>Work</span>
+    <h2 class="label" id="heading-hackalator">Current<br>Work</h2><!-- semantic: h2 added for landmark -->
   </div>
   <div>
-    <div class="project-name">Language Hackalator</div>
+    <h3 class="project-name">Language Hackalator</h3><!-- semantic: h3 added for landmark -->
     <p class="project-desc">
       Language Hackalator is a Chrome extension built for language learners reading foreign-language content online. Designed, architected, and shipped independently from manifest configuration to accessible tooltip UI.
     </p>
-    <p class="demo-note">Demo of fully accessible mouse and keyboard nav</p>
-
-    <p class="features-label">Key Features</p>
-
-    <div class="feature">
-      <span class="feature-name">Floating Tooltip Translation</span>
-      <span class="feature-desc">A content script detects text selection on any webpage and fetches live translations from the MyMemory API, rendering results in a scoped, auto-dismissing tooltip anchored near the highlighted text.</span>
+    <p class="demo-note">Demo of low-friction contextual translation</p>
+    <div class="gif-container">
+      <video autoplay loop muted playsinline>
+        <source src="assets/videos/language-hackalator-demo.mp4" type="video/mp4">
+      </video>
     </div>
-    <div class="feature">
-      <span class="feature-name">MV3 Chrome Extension Architecture</span>
-      <span class="feature-desc">Built on Manifest V3 with a popup-based language selector, chrome.storage.local persistence, and injected styles scoped to prevent host-page conflicts — no server, no API key required.</span>
-    </div>
-    <div class="feature">
-      <span class="feature-name">WCAG 2.1 AA Accessibility</span>
-      <span class="feature-desc">Tooltip announces via aria-live="polite" for screen readers; dismisses via Escape key, outside click, or timeout; keyboard focus management implemented throughout — all absent from naive tooltip patterns.</span>
-    </div>
+    <h4 class="features-label">Key Features</h4><!-- semantic: h4 added for landmark -->
+    <dl class="feature-list"><!-- semantic: dl wraps term/description pairs -->
+      <div class="feature">
+        <dt class="feature-name">Floating Tooltip Translation</dt>
+        <dd class="feature-desc">A content script detects text selection on any webpage and fetches live translations from the MyMemory API, rendering results in a scoped, auto-dismissing tooltip anchored near the highlighted text.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">MV3 Chrome Extension Architecture</dt>
+        <dd class="feature-desc">Built on Manifest V3 with a popup-based language selector, chrome.storage.local persistence, and injected styles scoped to prevent host-page conflicts — no server, no API key required.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">WCAG 2.1 AA Accessibility</dt>
+        <dd class="feature-desc">Tooltip announces via aria-live="polite" for screen readers; dismisses via Escape key, outside click, or timeout; keyboard focus management implemented throughout — all absent from naive tooltip patterns.</dd>
+      </div>
+    </dl>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     CURRENT WORK — CERES DISCOVERY SPRINT
+     CURRENT WORK — HISPANOSPHERE
 ════════════════════════════════════════════ -->
-<section class="section">
+<section class="section" aria-labelledby="heading-hispanosphere"><!-- semantic: aria-labelledby added for landmark -->
   <div class="section-aside">
-    <span class="label">Current<br>Work</span>
+    <h2 class="label" id="heading-hispanosphere">Current<br>Work</h2><!-- semantic: h2 added for landmark -->
   </div>
   <div>
-    <div class="project-name">CERES Discovery Sprint</div>
+    <h3 class="project-name">Hispanosphere</h3><!-- semantic: h3 added for landmark -->
     <p class="project-desc">
-      I don't just use the tools my engineering team builds — I investigate them. A structured product discovery sprint on McGraw Hill's internal content authoring platform, applying the six-part Pendo Product Discovery Framework to surface usability and feasibility risks and translate them into an engineering recommendation.
+      Hispanosphere is a full-stack solo project for exploring the culture, history, music, food, and slang of 26 Spanish-speaking countries. Designed, architected, and shipped independently from database schema to deployed UI.
+    </p>
+    <p class="demo-note">Demo of fully accessible mouse and keyboard nav</p>
+    <div class="gif-container">
+      <video autoplay loop muted playsinline>
+        <source src="assets/videos/hispanosphere-demo.mp4" type="video/mp4">
+      </video>
+    </div>
+    <h4 class="features-label">Key Features</h4><!-- semantic: h4 added for landmark -->
+    <dl class="feature-list"><!-- semantic: dl wraps term/description pairs -->
+      <div class="feature">
+        <dt class="feature-name">Interactive Leaflet Map</dt>
+        <dd class="feature-desc">Custom marker and popup system built with react-leaflet v5, rendering all countries with cultural deep-dives accessible via map.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">REST API + MongoDB Atlas</dt>
+        <dd class="feature-desc">Express 5 with Mongoose schema design powering a structured subtopic model: fun facts, music, food, slang, history, and pop culture.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">WCAG 2.1 AA Accessibility</dt>
+        <dd class="feature-desc">Resolved a non-trivial Leaflet keyboard focus interception bug using double requestAnimationFrame sequencing, and implemented manual focus return on popup close — both absent from Leaflet's default behavior.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">Modern Full-Stack Architecture</dt>
+        <dd class="feature-desc">React 19 + Vite 6 + Tailwind v4 frontend against an Express 5 + MongoDB Atlas backend, with an ADR-format engineering log.</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     TALKS & WRITING
+════════════════════════════════════════════ -->
+<section class="section" aria-labelledby="heading-talks">
+  <div class="section-aside">
+    <h2 class="label" id="heading-talks">Talks &amp;<br>Writing</h2>
+  </div>
+  <div>
+
+    <!-- ── ENTRY 1: Tech Talk ── -->
+    <h3 class="project-name" id="talk-cache-me">"Cache Me If You Can"</h3>
+    <p class="demo-note">Systems Design · Redis Architecture · Cognitive Load as a Lens</p>
+    <p class="status-badge" style="margin-bottom: 12px;">
+      <span class="tw-status-check" aria-hidden="true">✓</span>
+      <span>Delivered — public meetup</span>
+      <span aria-hidden="true" style="color: var(--rule);">·</span>
+      <a href="https://www.canva.com/design/DAGwknuOOto/VCzvpJtYi4b7XXz4EO5F0w/view?utm_content=DAGwknuOOto&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h35d93faeba" class="figma-link" aria-label="View talk slides: Cache Me If You Can" target="_blank" rel="noopener noreferrer" style="padding: 0;">view tech talk slides →</a>
+    </p>
+    <div class="slide-grid">
+      <img src="assets/images/redis-tech-talk-sponsor.png" alt="Cache Me If You Can — sponsor and event details">
+      <img src="assets/images/redis-tech-talk-title-slide.png" alt="Cache Me If You Can — title slide">
+    </div>
+    <p class="project-desc">
+      A 12-minute public talk exploring Redis architecture through the lens of cognitive
+      systems design — how human memory constraints map directly onto how Redis manages
+      latency, TTL, eviction, and persistence. Delivered to engineers at mixed seniority levels.
+    </p>
+    <h4 class="features-label">Topics Covered</h4>
+    <dl class="feature-list">
+      <div class="feature">
+        <dt class="feature-name">CS Meets Neuroscience</dt>
+        <dd class="feature-desc">
+Redis and neuroscience are solving the same problem: how do you move the right data to the right place, given that memory is finite? The Atkinson-Shiffrin model encodes information through short-term into long-term storage — Redis is engineered around the same constraint.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">TTL + the Forgetting Curve</dt>
+        <dd class="feature-desc">Time-to-Live as a model for both application session management
+        and how humans naturally shed short-term memory under load. Contraindications covered:
+        audit requirements, debugging tools.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">Cache Stampede Failure Mode</dt>
+        <dd class="feature-desc">The 2010 Facebook incident: cache-miss overload that caused a
+        2.5-hour outage. Used as a case study in how architectural assumptions — not Redis itself
+        — cause failures at scale.</dd>
+      </div>
+    </dl>
+    <aside class="callout warn">
+      <p>REDIS + Neuroscience teach us this: limits aren’t flaws-they’re design opportunities.
+
+So . . .
+
+design for differences – in <strong>systems</strong> and <strong>people</strong>.</p>
+    </aside>
+    <hr class="rule" style="margin: 40px 0;">
+
+    <!-- ── ENTRY 2: Medium Article ── -->
+    <h3 class="project-name" id="article-reactime-native">Reactime Native Update</h3>
+    <p class="status-badge" style="margin-bottom: 12px;">
+      <span class="tw-status-check" aria-hidden="true">✓</span>
+      <span>Published — Medium</span>
+      <span aria-hidden="true" style="color: var(--rule);">·</span>
+      <a href="#" class="figma-link" aria-label="Read article: Reactime Native Update on Medium" target="_blank" rel="noopener noreferrer" style="padding: 0;">read on Medium →</a>
+    </p>
+    <div class="gif-container">
+      <img src="assets/images/medium-article-2-screenshot.png" alt="Building Reactime Native — Medium article screenshot">
+    </div>
+    <p class="project-desc">
+      A deep-dive on the accessibility-first engineering decisions behind Reactime Native —
+      WebSocket relay architecture, the keyboard navigation implementation, and why open source
+      tooling needs accessibility championed from day one, not retrofitted after.
     </p>
 
-    <div class="status-badge">
-      <span class="live-dot"></span>
-      Active · Interviews begin [INSERT DATE] · Full documentation linked below
-    </div>
-
-    <p class="features-label">Key Features</p>
-
-    <div class="feature">
-      <span class="feature-name">Generative User Research</span>
-      <span class="feature-desc">Semi-structured interviews with 4–6 instructional designers across content areas, designed to surface the context, pain, and workarounds that quantitative data misses.</span>
-    </div>
-    <div class="feature">
-      <span class="feature-name">Pendo Product Discovery Framework</span>
-      <span class="feature-desc">All six framework stages mapped explicitly to sprint phases — from defining the business outcome through affinity mapping, HMW statements, and closing the loop with an engineering deliverable.</span>
-    </div>
-    <div class="feature">
-      <span class="feature-name">Bias Awareness Protocols</span>
-      <span class="feature-desc">Confirmation bias, authority bias, and bandwagon effect each addressed by design: open-ended questions, equal participant weighting, and frequency + severity scored independently in synthesis.</span>
-    </div>
-    <div class="feature">
-      <span class="feature-name">Engineering-Facing Output</span>
-      <span class="feature-desc">The deliverable is not a manager report. It's a prioritized recommendation document written for the Content Authoring Engineering team — actionable, risk-tagged, and Impact vs. Effort ranked.</span>
-    </div>
-    <div class="feature">
-      <span class="feature-name">Jobs to Be Done Framework</span>
-      <span class="feature-desc">Every interview question is built around one guiding question: what job are authors hiring this tool to do — and where does the tool get fired and a workaround gets hired instead.</span>
-    </div>
-
-    <div class="callout warn" style="margin-top: 32px;">
-      <p>The deliverable isn't a list of complaints. It's a prioritized recommendation written for engineers.</p>
-    </div>
-
-    <p style="margin-top: 28px;">
-      <a href="#" class="figma-link">View full documentation →</a>
-    </p>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
      THE ARCHIVES — FULL STACK APPS
 ════════════════════════════════════════════ -->
-<section class="section">
+<section class="section" aria-labelledby="heading-archives"><!-- semantic: aria-labelledby added for landmark -->
   <div class="section-aside">
-    <span class="label">The Archives:<br>Full Stack Apps</span>
+    <h2 class="label" id="heading-archives">The Archives:<br>Full Stack Apps</h2><!-- semantic: h2 added for landmark -->
   </div>
   <div>
-    <div class="project-name">ChorePal</div>
+    <h3 class="project-name">ChorePal</h3><!-- semantic: h3 added for landmark -->
     <p class="project-desc">
       Family chore tracking app built with TypeScript, React, Tailwind CSS, and MongoDB, upgraded to PostgreSQL + Supabase for relational data modeling and user authentication.
     </p>
-
-    <p class="features-label">Key Features</p>
-
-    <div class="feature">
-      <span class="feature-name">PostgreSQL + Supabase</span>
-      <span class="feature-desc">Relational data modeling and user auth enabling efficient task tracking and user management — a deliberate architectural upgrade from MongoDB.</span>
+    <p class="demo-note">Demo of chore assignment and family dashboard</p>
+    <div class="gif-container">
+      <video autoplay loop muted playsinline>
+        <source src="assets/videos/chorepal-demo.mp4" type="video/mp4">
+      </video>
     </div>
-    <div class="feature">
-      <span class="feature-name">JWT Authentication</span>
-      <span class="feature-desc">Secured API access with protected backend routes and httpOnly cookie-based JWT, resulting in stateless, secure sessions.</span>
-    </div>
-    <div class="feature">
-      <span class="feature-name">Tailwind CSS</span>
-      <span class="feature-desc">Accelerated development 40% leveraging utility-first classes for consistent, responsive component styling across screen sizes.</span>
-    </div>
+    <h4 class="features-label">Key Features</h4><!-- semantic: h4 added for landmark -->
+    <dl class="feature-list"><!-- semantic: dl wraps term/description pairs -->
+      <div class="feature">
+        <dt class="feature-name">PostgreSQL + Supabase</dt>
+        <dd class="feature-desc">Relational data modeling and user auth enabling efficient task tracking and user management — a deliberate architectural upgrade from MongoDB.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">JWT Authentication</dt>
+        <dd class="feature-desc">Secured API access with protected backend routes and httpOnly cookie-based JWT, resulting in stateless, secure sessions.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">Tailwind CSS</dt>
+        <dd class="feature-desc">Accelerated development 40% leveraging utility-first classes for consistent, responsive component styling across screen sizes.</dd>
+      </div>
+    </dl>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
      CURRENT DESIGN WORK
 ════════════════════════════════════════════ -->
-<section class="section">
+<section class="section" aria-labelledby="heading-design"><!-- semantic: aria-labelledby added for landmark -->
   <div class="section-aside">
-    <span class="label">Current<br>Design Work</span>
+    <h2 class="label" id="heading-design">Current<br>Design Work</h2><!-- semantic: h2 added for landmark -->
   </div>
   <div>
-    <div class="project-name">Component-Based Bilingual Learning Prototype</div>
+    <h3 class="project-name">Component-Based Bilingual Learning Prototype</h3><!-- semantic: h3 added for landmark -->
     <p class="project-desc">
-      A Figma component library and prototype demonstrating the design thinking behind McGraw Hill's K–5 dual-language courseware — built independently to showcase methodology without exposing proprietary content.
+      A Figma component library and prototype demonstrating the design thinking behind a new McGraw Hill product build.
     </p>
-    <p class="demo-note">Reading Passage, Vocabulary Card, and Audio Player Components · DOK Level and Interactive Variants</p>
-    <a href="#" class="figma-link">View in Figma →</a>
-
-    <p class="features-label" style="margin-top: 36px;">Key Features</p>
-
-    <div class="feature">
-      <span class="feature-name">Differentiated Assessment (DOK 1–3)</span>
-      <span class="feature-desc">Interactive components with formative feedback states promoting mastery and persistence across depth-of-knowledge levels.</span>
+    <div class="figma-compare-grid">
+      <figure>
+        <img src="assets/images/figma-component-2.png" alt="DOK level differentiation variants and interactive variants grid">
+        <figcaption>DOK Level (Differentiation) Variants and Interactive Variants</figcaption>
+        <a href="#" class="figma-link" aria-label="View Component-Based Bilingual Learning Prototype in Figma" style="display: block; margin-top: 14px; text-align: center;">View in Figma →</a>
+      </figure>
+      <figure>
+        <img src="assets/images/figma-component-1.png" alt="Reading Passage, Vocabulary Card, and Audio Player component detail">
+        <figcaption>Reading Passage, Vocabulary Card, and Audio Player Components</figcaption>
+      </figure>
     </div>
-    <div class="feature">
-      <span class="feature-name">Bilingual Scaffolding</span>
-      <span class="feature-desc">Side-by-side language presentation to reduce cognitive load and support language transfer in dual-language learners.</span>
-    </div>
-    <div class="feature">
-      <span class="feature-name">Component Architecture</span>
-      <span class="feature-desc">Reusable variant-based system enabling consistent implementation across 50+ lessons with a single source of truth.</span>
-    </div>
-    <div class="feature">
-      <span class="feature-name">WCAG 2.1 AA Accessibility</span>
-      <span class="feature-desc">Built-in compliance including color contrast ratios and semantic structure across all component variants.</span>
-    </div>
-
+    <h4 class="features-label" style="margin-top: 48px;">Engineering Decisions</h4><!-- semantic: h4 added for landmark -->
+    <dl class="feature-list"><!-- semantic: dl wraps term/description pairs -->
+      <div class="feature">
+        <dt class="feature-name">Variant-Based Component Architecture</dt>
+        <dd class="feature-desc">Single-source system with DOK 1–3 variants and bilingual configurations — consistency across 50+ lessons without divergent implementations.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">Shift-Left Accessibility</dt>
+        <dd class="feature-desc">WCAG 2.1 AA built into every variant at design time. Contrast, semantic structure, and interactive states verified before a line of code is written.</dd>
+      </div>
+      <div class="feature">
+        <dt class="feature-name">Cognitive Load as a Constraint</dt>
+        <dd class="feature-desc">Side-by-side bilingual scaffolding and progressive DOK complexity treat cognitive load as an architectural constraint, not a UX afterthought.</dd>
+      </div>
+    </dl>
     <p class="design-note" style="margin-top: 32px;">
-      <strong style="color: var(--white); font-weight: 500;">Impact at McGraw Hill</strong><br>
+      <strong style="color: var(--text); font-weight: 600;">Impact at McGraw Hill</strong><br>
       Developing first-of-its-kind product to deliver to students and teachers nationwide.<br>
       Cross-functional collaboration with curriculum, engineering, and QA teams.<br><br>
-      <em style="color: var(--mid);">Note: Portfolio recreations demonstrate methodology developed at McGraw Hill. All content original to protect confidentiality.</em>
+      <em style="color: var(--mid);">All content original. Methodology reflects workflow implemented at McGraw Hill.</em>
     </p>
   </div>
 </section>
@@ -759,9 +915,12 @@ footer .footer-links a:hover { color: var(--white); }
      QUOTE
 ════════════════════════════════════════════ -->
 <section id="quote">
-  <div class="page-wrap">
+  <div class="quote-img-wrap">
+    <img src="assets/images/sphinx.jpg" alt="The Great Sphinx — an enduring symbol of design built to last">
+  </div>
+  <div class="page-wrap" style="padding: 56px 56px 80px;">
     <p class="quote-text">
-      "The most delightful digital authoring &amp; learning experiences aren't just practically designed or beautifully architected — they're both. Shift-Left &amp; A11Y standards make this possible at scale, transforming engineering workflows while maintaining instructional integrity."
+      "The best EdTech isn't practically designed or beautifully architected. It's both. Shift-Left &amp; A11Y make that possible at scale."
     </p>
     <p class="quote-attr">— Jamila Gibson &nbsp;·&nbsp; Practically designed. Beautifully architected.</p>
   </div>
@@ -771,42 +930,38 @@ footer .footer-links a:hover { color: var(--white); }
      EXPERTISE
 ════════════════════════════════════════════ -->
 <div class="page-wrap">
-<section id="expertise">
+<section id="expertise" aria-labelledby="heading-expertise"><!-- semantic: aria-labelledby added for landmark -->
   <div class="section-aside">
-    <span class="label">Expertise</span>
+    <h2 class="label" id="heading-expertise">Expertise</h2><!-- semantic: h2 added for landmark -->
   </div>
   <div class="expertise-grid">
-
     <div class="exp-block">
-      <p class="exp-block-title">Accessibility + Inclusive Engineering</p>
+      <h3 class="exp-block-title">Accessibility + Inclusive Engineering</h3><!-- semantic: h3 added for landmark -->
       <ul>
         <li>ARIA, keyboard nav, semantic HTML implementation</li>
         <li>UDL principles applied to engineering decisions</li>
         <li>WCAG 2.1 AA audit, remediation, advocacy</li>
       </ul>
     </div>
-
     <div class="exp-block">
-      <p class="exp-block-title">Full Stack + API Design</p>
+      <h3 class="exp-block-title">Full Stack + API Design</h3><!-- semantic: h3 added for landmark -->
       <ul>
         <li>3-layer WebSocket relay architecture</li>
         <li>RESTful APIs, relational/non-relational DBs</li>
         <li>TypeScript strict mode coverage</li>
       </ul>
     </div>
-
     <div class="exp-block">
-      <p class="exp-block-title">Domain Expertise + User Empathy</p>
+      <h3 class="exp-block-title">Domain Expertise + User Empathy</h3><!-- semantic: h3 added for landmark -->
       <ul>
         <li>Daily CERES end user</li>
-        <li>Formal UX research and documentation</li>
+        <li>Formal UX/UI research and documentation</li>
         <li>18 years building for diverse learners</li>
         <li>Product discovery methodology (Pendo certified)</li>
       </ul>
     </div>
-
     <div class="exp-block">
-      <p class="exp-block-title">Component Architecture</p>
+      <h3 class="exp-block-title">Component Architecture</h3><!-- semantic: h3 added for landmark -->
       <ul>
         <li>Variant-based design systems in Figma</li>
         <li>Shift-left engineering practices</li>
@@ -814,10 +969,11 @@ footer .footer-links a:hover { color: var(--white); }
         <li>Open source contribution + OSLabs</li>
       </ul>
     </div>
-
   </div>
 </section>
 </div>
+
+</main><!-- end main landmark -->
 
 <!-- ═══════════════════════════════════════════
      FOOTER
@@ -830,6 +986,37 @@ footer .footer-links a:hover { color: var(--white); }
     <a href="mailto:jamila.gibson@mheducation.com">Contact</a>
   </div>
 </footer>
+
+<script>
+  (function () {
+    var html  = document.documentElement;
+    var btn   = document.getElementById('theme-toggle');
+    var icon  = document.getElementById('toggle-icon');
+    var label = document.getElementById('toggle-label');
+
+    function applyTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      if (theme === 'dark') {
+        icon.textContent  = '\u2600'; /* sun */
+        label.textContent = 'Light';
+        btn.setAttribute('aria-label', 'Switch to light mode');
+      } else {
+        icon.textContent  = '\u263E'; /* crescent */
+        label.textContent = 'Dark';
+        btn.setAttribute('aria-label', 'Switch to dark mode');
+      }
+    }
+
+    /* Sync button label with theme already set in <head> */
+    applyTheme(html.getAttribute('data-theme') || 'dark');
+
+    btn.addEventListener('click', function () {
+      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('portfolio-theme', next);
+      applyTheme(next);
+    });
+  }());
+</script>
 
 </body>
 </html>

@@ -651,12 +651,11 @@ footer .footer-links a:hover { color: var(--accent); }
     <p class="project-desc">
       Signal Board is a Node.js/Express + PostgreSQL feature voting API — a deliberately engineered backend built as a performance engineering lab. Users submit feature requests and vote on priorities; the architecture demonstrates the full arc from N+1 anti-pattern diagnosis to a quantified 22x speedup, documented via ADRs at every step.
     </p>
-    <p class="demo-note">4-layer architecture · Zod validation · Redis: 282ms → 2ms · ADR docs</p>
+    <p class="demo-note">4-layer architecture · Zod validation · Redis: 222ms → ~7ms · ADR docs</p>
     <div class="gif-container">
-      <div class="gif-placeholder">
-        <div class="gif-placeholder-icon">▶</div>
-        <span>// TODO: upload demo — check back by Thursday, March 12, 2026</span>
-      </div>
+      <video autoplay loop muted playsinline>
+        <source src="assets/videos/signalboard-demo.mp4" type="video/mp4">
+      </video>
     </div>
     <h4 class="features-label">Key Features</h4><!-- semantic: h4 added for landmark -->
     <dl class="feature-list"><!-- semantic: dl wraps term/description pairs -->

@@ -332,6 +332,18 @@ body {
 }
 @keyframes breathe { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
+/* ─── WINNER BADGE ───────────────────────── */
+.winner-badge {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+  margin-left: 14px;
+  white-space: nowrap;
+}
+
 /* ─── FRAMEWORK TABLE (CERES) ─────────────── */
 .framework-table { width: 100%; border-collapse: collapse; margin: 32px 0; font-size: 13px; }
 .framework-table th {
@@ -683,9 +695,9 @@ footer .footer-links a:hover { color: var(--accent); }
     <h2 class="label" id="heading-hackalator">Current<br>Work</h2><!-- semantic: h2 added for landmark -->
   </div>
   <div>
-    <h3 class="project-name">Language Hackalator</h3><!-- semantic: h3 added for landmark -->
+    <h3 class="project-name">Language Hackalator<span class="winner-badge"><span aria-hidden="true">★</span> Hackathon Winner</span></h3><!-- semantic: h3 added for landmark -->
     <p class="project-desc">
-      Language Hackalator is a Chrome extension built for language learners reading foreign-language content online. Designed, architected, and shipped independently from manifest configuration to accessible tooltip UI.
+      Language Hackalator started as a hackathon-winning Chrome extension. v2 was independently designed and shipped, evolving the inline DOM-rewrite into a stable, accessible floating tooltip, from manifest configuration to UI layer.
     </p>
     <p class="demo-note">Demo of low-friction contextual translation</p>
     <div class="gif-container">

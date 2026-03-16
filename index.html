@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
 <title>Jamila Gibson — Software Engineer</title>
 <!-- Anti-flash: apply stored/system theme before first paint -->
 <script>
@@ -178,11 +179,14 @@ body {
 }
 .hero-links a:hover { color: var(--accent); }
 
-/* SC 2.4.11 — consistent focus ring for all links */
-a:focus-visible {
+/* SC 2.4.11 — show focus ring on keyboard nav, suppress on mouse click */
+a:focus {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 1px;
+}
+a:focus:not(:focus-visible) {
+  outline: none;
 }
 .hero-links a + a::before {
   content: ' · ';
@@ -261,6 +265,14 @@ a:focus-visible {
   border: 1px solid var(--rule);
   background: var(--surface);
 }
+/* SC 2.4.11 — surface the focus ring on the container so overflow:hidden
+   doesn't clip the outline drawn by the inner <video> element in Chrome */
+.gif-container:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.gif-container video:focus { outline: none; }
 .gif-container img,
 .gif-container video { width: 100%; display: block; border-radius: 3px; }
 .gif-placeholder {
@@ -598,7 +610,7 @@ footer .footer-links a:hover { color: var(--accent); }
     <span class="accent">Software<br>Engineer</span>
   </h1>
   <p class="hero-tagline fade d2">
-    I build delightfully accessible EdTech tools that I — as a user — have spent years wishing existed.
+    I build delightfully accessible EdTech tools with features that I — as a user — have spent years wishing existed.
   </p>
   <div class="hero-links fade d3">
     <a href="https://github.com/jamilagibson">github.com/jamilagibson</a>
@@ -1063,10 +1075,25 @@ design for differences – in <strong>systems</strong> and <strong>people</stron
   }());
 
   /* SC 2.2.2 — pause autoplaying videos for prefers-reduced-motion users */
+  /* SC 2.1.1 — Space toggles play/pause on focused video (prevents page scroll) */
   (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.querySelectorAll('video').forEach(function (v) { v.pause(); });
-    }
+    document.querySelectorAll('video').forEach(function (v) {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        v.pause();
+      }
+      v.addEventListener('keydown', function (e) {
+        if (e.code === 'Space' || e.key === ' ') {
+          e.preventDefault();
+          v.paused ? v.play() : v.pause();
+        } else if (e.code === 'ArrowRight') {
+          e.preventDefault();
+          v.currentTime = Math.min(v.currentTime + 5, v.duration);
+        } else if (e.code === 'ArrowLeft') {
+          e.preventDefault();
+          v.currentTime = Math.max(v.currentTime - 5, 0);
+        }
+      });
+    });
   }());
 </script>
 

@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
 <title>Jamila Gibson — Software Engineer</title>
 <!-- Anti-flash: apply stored/system theme before first paint -->
 <script>
@@ -119,6 +120,19 @@ body {
   color: var(--mid);
 }
 
+/* ─── SCREEN-READER ONLY ─────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 .rule { border: none; border-top: 1px solid var(--rule); }
 
 /* ─── HERO ────────────────────────────────── */
@@ -164,6 +178,16 @@ body {
   transition: color 0.2s;
 }
 .hero-links a:hover { color: var(--accent); }
+
+/* SC 2.4.11 — show focus ring on keyboard nav, suppress on mouse click */
+a:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+a:focus:not(:focus-visible) {
+  outline: none;
+}
 .hero-links a + a::before {
   content: ' · ';
   color: var(--rule);
@@ -241,6 +265,14 @@ body {
   border: 1px solid var(--rule);
   background: var(--surface);
 }
+/* SC 2.4.11 — surface the focus ring on the container so overflow:hidden
+   doesn't clip the outline drawn by the inner <video> element in Chrome */
+.gif-container:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.gif-container video:focus { outline: none; }
 .gif-container img,
 .gif-container video { width: 100%; display: block; border-radius: 3px; }
 .gif-placeholder {
@@ -371,7 +403,7 @@ body {
 .callout { border-left: 2px solid var(--rule); padding: 16px 20px; margin: 28px 0; }
 .callout p { font-size: 13px; font-style: italic; color: var(--mid); line-height: 1.7; }
 .callout.warn { border-color: var(--accent); }
-.callout.warn p { color: var(--accent-muted); }
+.callout.warn p { color: var(--accent); }
 
 /* ─── DESIGN SECTION ──────────────────────── */
 .design-note { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--mid); margin-top: 20px; line-height: 1.7; }
@@ -578,7 +610,7 @@ footer .footer-links a:hover { color: var(--accent); }
     <span class="accent">Software<br>Engineer</span>
   </h1>
   <p class="hero-tagline fade d2">
-    I build delightfully accessible EdTech tools that I — as a user — have spent years wishing existed.
+    I build delightfully accessible EdTech tools with features that I — as a user — have spent years wishing existed.
   </p>
   <div class="hero-links fade d3">
     <a href="https://github.com/jamilagibson">github.com/jamilagibson</a>
@@ -616,7 +648,7 @@ footer .footer-links a:hover { color: var(--accent); }
 ════════════════════════════════════════════ -->
 <section class="section" aria-labelledby="heading-reactime"><!-- semantic: aria-labelledby added for landmark -->
   <div class="section-aside">
-    <h2 class="label" id="heading-reactime">Current<br>Work</h2><!-- semantic: h2 added for landmark -->
+    <h2 class="label" id="heading-reactime">Current<br>Work<span class="sr-only">: Reactime Native</span></h2><!-- semantic: h2 added for landmark -->
   </div>
   <div>
     <h3 class="project-name">Reactime Native</h3><!-- semantic: h3 added for landmark -->
@@ -625,7 +657,7 @@ footer .footer-links a:hover { color: var(--accent); }
     </p>
     <p class="demo-note">Demo of RN app snapshot rendering and fully accessible keyboard nav</p>
     <div class="gif-container">
-      <video autoplay loop muted playsinline>
+      <video autoplay loop muted playsinline controls aria-label="Demo: Reactime Native — RN app snapshot rendering and keyboard navigation in the debugger UI">
         <source src="assets/videos/reactime-native-demo.mp4" type="video/mp4">
       </video>
     </div>
@@ -656,7 +688,7 @@ footer .footer-links a:hover { color: var(--accent); }
 ════════════════════════════════════════════ -->
 <section class="section" aria-labelledby="heading-signalboard"><!-- semantic: aria-labelledby added for landmark -->
   <div class="section-aside">
-    <h2 class="label" id="heading-signalboard">Current<br>Work</h2><!-- semantic: h2 added for landmark -->
+    <h2 class="label" id="heading-signalboard">Current<br>Work<span class="sr-only">: Signal Board</span></h2><!-- semantic: h2 added for landmark -->
   </div>
   <div>
     <h3 class="project-name">Signal Board</h3><!-- semantic: h3 added for landmark -->
@@ -665,7 +697,7 @@ footer .footer-links a:hover { color: var(--accent); }
     </p>
     <p class="demo-note">4-layer architecture · Zod validation · Redis: 222ms → ~7ms · ADR docs</p>
     <div class="gif-container">
-      <video autoplay loop muted playsinline>
+      <video autoplay loop muted playsinline controls aria-label="Demo: Signal Board — feature voting API with 4-layer architecture and Redis caching">
         <source src="assets/videos/signalboard-demo.mp4" type="video/mp4">
       </video>
     </div>
@@ -692,7 +724,7 @@ footer .footer-links a:hover { color: var(--accent); }
 ════════════════════════════════════════════ -->
 <section class="section" aria-labelledby="heading-hackalator"><!-- semantic: aria-labelledby added for landmark -->
   <div class="section-aside">
-    <h2 class="label" id="heading-hackalator">Current<br>Work</h2><!-- semantic: h2 added for landmark -->
+    <h2 class="label" id="heading-hackalator">Current<br>Work<span class="sr-only">: Language Hackalator</span></h2><!-- semantic: h2 added for landmark -->
   </div>
   <div>
     <h3 class="project-name">Language Hackalator<span class="winner-badge"><span aria-hidden="true">★</span> Hackathon Winner</span></h3><!-- semantic: h3 added for landmark -->
@@ -701,7 +733,7 @@ footer .footer-links a:hover { color: var(--accent); }
     </p>
     <p class="demo-note">Demo of low-friction contextual translation</p>
     <div class="gif-container">
-      <video autoplay loop muted playsinline>
+      <video autoplay loop muted playsinline controls aria-label="Demo: Language Hackalator — low-friction contextual translation tooltip on selected text">
         <source src="assets/videos/language-hackalator-demo.mp4" type="video/mp4">
       </video>
     </div>
@@ -728,7 +760,7 @@ footer .footer-links a:hover { color: var(--accent); }
 ════════════════════════════════════════════ -->
 <section class="section" aria-labelledby="heading-hispanosphere"><!-- semantic: aria-labelledby added for landmark -->
   <div class="section-aside">
-    <h2 class="label" id="heading-hispanosphere">Current<br>Work</h2><!-- semantic: h2 added for landmark -->
+    <h2 class="label" id="heading-hispanosphere">Current<br>Work<span class="sr-only">: Hispanosphere</span></h2><!-- semantic: h2 added for landmark -->
   </div>
   <div>
     <h3 class="project-name">Hispanosphere</h3><!-- semantic: h3 added for landmark -->
@@ -737,7 +769,7 @@ footer .footer-links a:hover { color: var(--accent); }
     </p>
     <p class="demo-note">Demo of page navigation and keyboard-only nav</p>
     <div class="gif-container">
-      <video autoplay loop muted playsinline>
+      <video autoplay loop muted playsinline controls aria-label="Demo: Hispanosphere — interactive map navigation and keyboard-only country exploration">
         <source src="assets/videos/hispanosphere-demo.mp4" type="video/mp4">
       </video>
     </div>
@@ -867,10 +899,9 @@ design for differences – in <strong>systems</strong> and <strong>people</stron
     </p>
     <p class="demo-note">Demo of chore assignment and family dashboard</p>
     <div class="gif-container">
-      <video autoplay loop muted playsinline>
+      <video autoplay loop muted playsinline controls aria-label="Demo: ChorePal — chore assignment flow and family dashboard with gamified progress tracker">
         <source src="assets/videos/chorepal-demo.mp4" type="video/mp4">
       </video>
-      
     </div>
     <h4 class="features-label">Key Features</h4><!-- semantic: h4 added for landmark -->
     <dl class="feature-list"><!-- semantic: dl wraps term/description pairs -->
@@ -906,7 +937,6 @@ design for differences – in <strong>systems</strong> and <strong>people</stron
       <figure>
         <img src="assets/images/figma-component-2.png" alt="DOK level differentiation variants and interactive variants grid">
         <figcaption>DOK Level (Differentiation) Variants and Interactive Variants</figcaption>
-        <a href="#" class="figma-link" aria-label="View Component-Based Bilingual Learning Prototype in Figma" style="display: block; margin-top: 14px; text-align: center;">View in Figma →</a>
       </figure>
       <figure>
         <img src="assets/images/figma-component-1.png" alt="Reading Passage, Vocabulary Card, and Audio Player component detail">
@@ -1041,6 +1071,28 @@ design for differences – in <strong>systems</strong> and <strong>people</stron
       var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       localStorage.setItem('portfolio-theme', next);
       applyTheme(next);
+    });
+  }());
+
+  /* SC 2.2.2 — pause autoplaying videos for prefers-reduced-motion users */
+  /* SC 2.1.1 — Space toggles play/pause on focused video (prevents page scroll) */
+  (function () {
+    document.querySelectorAll('video').forEach(function (v) {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        v.pause();
+      }
+      v.addEventListener('keydown', function (e) {
+        if (e.code === 'Space' || e.key === ' ') {
+          e.preventDefault();
+          v.paused ? v.play() : v.pause();
+        } else if (e.code === 'ArrowRight') {
+          e.preventDefault();
+          v.currentTime = Math.min(v.currentTime + 5, v.duration);
+        } else if (e.code === 'ArrowLeft') {
+          e.preventDefault();
+          v.currentTime = Math.max(v.currentTime - 5, 0);
+        }
+      });
     });
   }());
 </script>
